@@ -1,0 +1,18 @@
+tasks:
+  install-terraform:
+    name: Install Terraform CLI
+    description: Installs Terraform CLI when workspace starts
+    command: |
+      chmod +x ./bin/install-terraform.sh
+      ./bin/install-terraform.sh
+
+  configure-aws:
+    name: Configure AWS CLI
+    description: Loads credentials from .env and configures AWS CLI
+    command: |
+      set -a && source .env && set +a
+      aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+      aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+      aws configure set region $AWS_DEFAULT_REGION
+      aws configure set output json
+      aws sts get-caller-identity
